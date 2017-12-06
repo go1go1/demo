@@ -1,50 +1,53 @@
-package lib
+package aesECB
 
 import (
 	"bytes"
 	"crypto/aes"
+	"encoding/hex"
 )
 
 // 加密
-func Encrypt(plaintext []byte, key string) []byte {
+func Encrypt(plaintext string, key string) []byte {
 	cipher, err := aes.NewCipher([]byte(key[:aes.BlockSize]))
 	if err != nil {
 		panic(err.Error())
 	}
 
-	if len(plaintext)%aes.BlockSize != 0 {
+	padText := PKCS7Pad([]byte(plaintext))
+	if len(padText)%aes.BlockSize != 0 {
 		panic("Need a multiple of the blocksize 16")
 	}
 
 	ciphertext := make([]byte, 0)
 	text := make([]byte, 16)
-	for len(plaintext) > 0 {
+	for len(padText) > 0 {
 		// 每次运算一个block
-		cipher.Encrypt(text, plaintext)
-		plaintext = plaintext[aes.BlockSize:]
+		cipher.Encrypt(text, padText)
+		padText = padText[aes.BlockSize:]
 		ciphertext = append(ciphertext, text...)
 	}
 	return ciphertext
 }
 
 // 解密
-func Decrypt(ciphertext []byte, key string) []byte {
+func Decrypt(ciphertext string, key string) []byte {
 	cipher, err := aes.NewCipher([]byte(key[:aes.BlockSize]))
 	if err != nil {
 		panic(err.Error())
 	}
-
 	if len(ciphertext)%aes.BlockSize != 0 {
 		panic("Need a multiple of the blocksize 16")
 	}
 
 	plaintext := make([]byte, 0)
 	text := make([]byte, 16)
-	for len(ciphertext) > 0 {
-		cipher.Decrypt(text, ciphertext)
-		ciphertext = ciphertext[aes.BlockSize:]
+	byteText, _ := hex.DecodeString(ciphertext)
+	for len(byteText) > 0 {
+		cipher.Decrypt(text, byteText)
+		byteText = byteText[aes.BlockSize:]
 		plaintext = append(plaintext, text...)
 	}
+	plaintext = PKCS7UPad(plaintext)
 	return plaintext
 }
 
