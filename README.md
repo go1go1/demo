@@ -1,2 +1,3 @@
 # demo
-Example code for go.
+
+个人学习golang的一些例子🌰，包括非常有用的库以及书上的基础代码。
