@@ -2,10 +2,7 @@ package main
 
 import (
 	"crypto/aes"
-	"demo/aesCBC"
-	"demo/aesECB"
-	"demo/desCBC"
-	"demo/desECB"
+	"demo/util"
 	"encoding/base64"
 	"encoding/hex"
 	"encoding/json"
@@ -26,11 +23,11 @@ func testAesECB() {
 
 	heKey, _ := base64.StdEncoding.DecodeString(key)
 	// byteData := aesECB.Encrypt(aesECB.PKCS7Pad([]byte(txt), 128), string(heKey))
-	byteData := aesECB.Encrypt(aesECB.PKCS7Pad([]byte(txt), aes.BlockSize), string(heKey))
+	byteData := util.AesECBEncrypt(util.AesECBPKCS7Pad([]byte(txt), aes.BlockSize), string(heKey))
 	cipherText := hex.EncodeToString(byteData)
 	fmt.Println(cipherText)
 	fmt.Printf("base64 ciphertext: %s \n", base64.StdEncoding.EncodeToString(byteData))
-	plainText := aesECB.PKCS7UnPad(aesECB.Decrypt(cipherText, string(heKey)))
+	plainText := util.AesECBPKCS7UnPad(util.AesECBDecrypt(cipherText, string(heKey)))
 	fmt.Printf("plaintext: %s \n", plainText)
 
 }
@@ -41,12 +38,23 @@ func testAesCBC() {
 	key := "4uoRHo0TC62DyLPh7QYlWA=="
 
 	heKey, _ := base64.StdEncoding.DecodeString(key)
-	byteData, _ := aesCBC.Encrypt([]byte(txt), heKey)
+	byteData, _ := util.AesCBCEncrypt([]byte(txt), heKey)
 	cipherText := hex.EncodeToString(byteData)
 	fmt.Println(cipherText)
 	fmt.Printf("base64 ciphertext: %s \n", base64.StdEncoding.EncodeToString(byteData))
-	plainText, _ := aesCBC.Decrypt(byteData, heKey)
+	plainText, _ := util.AesCBCDecrypt(byteData, heKey)
 	fmt.Printf("plaintext: %s \n", plainText)
+}
+
+func testDesCBC() {
+	fmt.Println("testDesCBC ---------------------------------")
+	txt := "201711270101000000001"
+	key := "12345678"
+
+	result, _ := util.DesCBCEncrypt([]byte(txt), []byte(key))
+	fmt.Println(base64.StdEncoding.EncodeToString(result))
+	origData, _ := util.DesCBCDecrypt(result, []byte(key))
+	fmt.Println(string(origData))
 }
 
 func testJSON() string {
@@ -78,23 +86,14 @@ func testJSON() string {
 	return res
 }
 
-func testDesCBC() {
-	fmt.Println("testDesCBC ---------------------------------")
-	txt := "201711270101000000001"
-	key := "12345678"
-
-	result, _ := desCBC.DesEncrypt([]byte(txt), []byte(key))
-	fmt.Println(base64.StdEncoding.EncodeToString(result))
-	origData, _ := desCBC.DesDecrypt(result, []byte(key))
-	fmt.Println(string(origData))
-}
-
 func testDesECB() {
 	fmt.Println("testDesECB ---------------------------------")
-	txt := testJSON()
-	key := "788f2a_A851668_Q"
-	result, _ := desECB.DesEncrypt([]byte(txt), []byte(key))
+	txt := "201711270101000000001"
+	key := "4uoRHo0TC62DyLPh7QYlWA=="
+
+	heKey, _ := base64.StdEncoding.DecodeString(key)
+	result, _ := util.DesECBEncrypt([]byte(txt), heKey)
 	fmt.Println(base64.StdEncoding.EncodeToString(result))
-	origData, _ := desECB.DesDecrypt(result, []byte(key))
+	origData, _ := util.DesECBDecrypt(result, heKey)
 	fmt.Println(string(origData))
 }

@@ -1,4 +1,4 @@
-package aesECB
+package util
 
 import (
 	"bytes"
@@ -7,7 +7,7 @@ import (
 )
 
 // 加密
-func Encrypt(plaintext []byte, key string) []byte {
+func AesECBEncrypt(plaintext []byte, key string) []byte {
 	cipher, err := aes.NewCipher([]byte(key[:aes.BlockSize]))
 	if err != nil {
 		panic(err.Error())
@@ -29,7 +29,7 @@ func Encrypt(plaintext []byte, key string) []byte {
 }
 
 // 解密
-func Decrypt(ciphertext string, key string) []byte {
+func AesECBDecrypt(ciphertext string, key string) []byte {
 	cipher, err := aes.NewCipher([]byte(key[:aes.BlockSize]))
 	if err != nil {
 		panic(err.Error())
@@ -50,27 +50,27 @@ func Decrypt(ciphertext string, key string) []byte {
 }
 
 // Padding补全
-func PKCS5Pad(ciphertext []byte, blockSize int) []byte {
+func AesECBPKCS5Pad(ciphertext []byte, blockSize int) []byte {
 	padding := blockSize - len(ciphertext)%blockSize
 	padtext := bytes.Repeat([]byte{byte(padding)}, padding)
 	return append(ciphertext, padtext...)
 }
 
-func PKCS5UnPad(origData []byte) []byte {
+func AesECBPKCS5UnPad(origData []byte) []byte {
 	length := len(origData)
 	// 去掉最后一个字节 unpadding 次
 	unpadding := int(origData[length-1])
 	return origData[:(length - unpadding)]
 }
 
-func PKCS7Pad(ciphertext []byte, blockSize int) []byte {
+func AesECBPKCS7Pad(ciphertext []byte, blockSize int) []byte {
 	padding := blockSize - len(ciphertext)%blockSize
 	padtext := bytes.Repeat([]byte{byte(padding)}, padding)
 	return append(ciphertext, padtext...)
 }
 
 //
-func PKCS7UnPad(origData []byte) []byte {
+func AesECBPKCS7UnPad(origData []byte) []byte {
 	length := len(origData)
 	// 去掉最后一个字节 unpadding 次
 	unpadding := int(origData[length-1])

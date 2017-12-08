@@ -1,4 +1,4 @@
-package desECB
+package util
 
 import (
 	"bytes"
@@ -7,26 +7,26 @@ import (
 	"fmt"
 )
 
-func PKCS5Padding(ciphertext []byte, blockSize int) []byte {
+func pkcs5Pad(ciphertext []byte, blockSize int) []byte {
 	padding := blockSize - len(ciphertext)%blockSize
 	padtext := bytes.Repeat([]byte{byte(padding)}, padding)
 	return append(ciphertext, padtext...)
 }
 
-func PKCS5UnPadding(origData []byte) []byte {
+func pkcs5UnPad(origData []byte) []byte {
 	length := len(origData)
 	unpadding := int(origData[length-1])
 	return origData[:(length - unpadding)]
 }
 
-func DesEncrypt(src, key []byte) ([]byte, error) {
+func DesECBEncrypt(src, key []byte) ([]byte, error) {
 	block, err := des.NewCipher(key[:des.BlockSize])
 	if err != nil {
 		fmt.Println(err)
 		return nil, err
 	}
 	bs := block.BlockSize()
-	src = PKCS5Padding(src, bs)
+	src = pkcs5Pad(src, bs)
 	if len(src)%bs != 0 {
 		return nil, errors.New("Need a multiple of the blocksize")
 	}
@@ -40,7 +40,7 @@ func DesEncrypt(src, key []byte) ([]byte, error) {
 	return out, nil
 }
 
-func DesDecrypt(src, key []byte) ([]byte, error) {
+func DesECBDecrypt(src, key []byte) ([]byte, error) {
 	block, err := des.NewCipher(key[:des.BlockSize])
 	if err != nil {
 		return nil, err
@@ -56,6 +56,6 @@ func DesDecrypt(src, key []byte) ([]byte, error) {
 		src = src[bs:]
 		dst = dst[bs:]
 	}
-	out = PKCS5UnPadding(out)
+	out = pkcs5UnPad(out)
 	return out, nil
 }
