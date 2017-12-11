@@ -2,8 +2,8 @@
  * @Author: richen
  * @Date: 2017-12-08 16:25:47
  * @Copyright (c) - <richenlin(at)gmail.com>
- * @Last Modified by:   richen
- * @Last Modified time: 2017-12-08 16:25:47
+ * @Last Modified by: richen
+ * @Last Modified time: 2017-12-08 19:38:06
  */
 package main
 
@@ -14,13 +14,17 @@ import (
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
+	"time"
+
+	"github.com/ivpusic/neo"
 )
 
 func main() {
 	// testAesECB()
 	// testAesCBC()
 	// testDesCBC()
-	testDesECB()
+	// testDesECB()
+	testNeo()
 }
 
 func testAesECB() {
@@ -103,4 +107,24 @@ func testDesECB() {
 	fmt.Println(base64.StdEncoding.EncodeToString(result))
 	origData, _ := util.DesECBDecrypt(result, heKey)
 	fmt.Println(string(origData))
+}
+
+func testNeo() {
+	app := neo.App()
+
+	app.Get("/", func(ctx *neo.Ctx) (int, error) {
+		return 200, ctx.Res.Text("2222")
+	})
+
+	app.Use(func(ctx *neo.Ctx, next neo.Next) {
+		start := time.Now().UnixNano()
+		fmt.Printf("--> [Req] %s to %s", ctx.Req.Method, ctx.Req.URL.Path)
+
+		next()
+
+		elapsed := int64(time.Now().UnixNano()-start) / 1000
+		fmt.Printf("<-- [Res] (%d) %s to %s Took %vµs \n", ctx.Res.Status, ctx.Req.Method, ctx.Req.URL.Path, elapsed)
+	})
+
+	app.Start()
 }
