@@ -3,7 +3,8 @@
 
 这里只说明Mac OS的设置。
 
-### 翻墙必备 shadowsocks
+### 科学上网必备 shadowsocks
+
 配置自己的服务端。客户端使用ShadowsocksX-NG
 
 偏好设置--> 开启HTTP代理服务器，端口号1080
