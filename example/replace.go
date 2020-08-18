@@ -1,8 +1,8 @@
 package main
 
 import (
+	"Script/tools"
 	"bufio"
-	"demo/tools"
 	"fmt"
 	"io"
 	"os"

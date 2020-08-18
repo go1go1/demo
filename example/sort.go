@@ -54,8 +54,8 @@ func bubbleSort(a [8]int) [8]int {
 }
 
 // golang标准库sort排序
-func standSort() {
-	var a [5]int = [5]int{5, 3, 4, 2, 1}
+func standSort(a [8]int) {
+	//var a [5]int = [5]int{5, 3, 4, 2, 1}
 	sort.Ints(a[:])
 
 	fmt.Println("a:", a)
@@ -67,5 +67,5 @@ func main() {
 	// fmt.Println(insertSort(i))
 	// fmt.Println(selectSort(i))
 	// fmt.Println(bubbleSort(i))
-	standSort()
+	standSort(i)
 }
