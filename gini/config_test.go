@@ -1,4 +1,4 @@
-package goini
+package gini
 
 import (
 	"fmt"
