@@ -25,7 +25,7 @@ func sayHello(w http.ResponseWriter, r *http.Request) {
 
 func login(w http.ResponseWriter, r *http.Request) {
 	if r.Method == "GET" {
-		t, err := template.ParseFiles("./login.html")
+		t, err := template.ParseFiles("./logins.html")
 		if err != nil {
 			fmt.Fprintf(w, "load template failed, %#v", err)
 			return
