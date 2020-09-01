@@ -8,16 +8,16 @@ import (
 	"github.com/vmihailenco/msgpack"
 )
 
-type Person struct {
+type Person2 struct {
 	Name string `bson:"name" json:"name"`
 	Age  int    `bson:"age" json:"age"`
 	Sex  string `bson:"sex" json:"sex"`
 }
 
 func writeContent(filename string) (err error) {
-	var persons []*Person
+	var persons []*Person2
 	for i := 0; i < 10; i++ {
-		p := &Person{
+		p := &Person2{
 			Name: fmt.Sprintf("name%d", i),
 			Age:  rand.Intn(100),
 			Sex:  "Man",
@@ -41,7 +41,7 @@ func writeContent(filename string) (err error) {
 }
 
 func readContent(filename string) (err error) {
-	var parsons []*Person
+	var parsons []*Person2
 	data, err := ioutil.ReadFile(filename)
 	if err != nil {
 		return
