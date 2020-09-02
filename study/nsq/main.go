@@ -58,7 +58,7 @@ func initProducer(dsn string) error {
 }
 
 func Produce() {
-	nsqAddress := "9.135.12.51:4150"
+	nsqAddress := "127.0.0.1:4150"
 	err := initProducer(nsqAddress)
 	if err != nil {
 		fmt.Printf("%v\n", err)
@@ -105,7 +105,7 @@ func initConsumer(topic string, channel string, address string) error {
 }
 
 func Consume() {
-	err := initConsumer("order_queue", "first", "9.135.12.51:4161")
+	err := initConsumer("order_queue", "first", "127.0.0.1:4161")
 	if err != nil {
 		fmt.Printf("%v\n", err)
 		return

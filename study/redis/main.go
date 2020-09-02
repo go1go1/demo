@@ -47,7 +47,7 @@ Redis主从同步
 */
 
 func main() {
-	c, err := redis.Dial("tcp", "9.135.12.51:6379")
+	c, err := redis.Dial("tcp", "127.0.0.1:6379")
 	if err != nil {
 		fmt.Printf("conn redis failed, err: %v\n", err)
 		return

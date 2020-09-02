@@ -21,7 +21,7 @@ type User struct {
 }
 
 func initDB() error {
-	dsn := "root:123456@tcp(9.135.12.51)/test"
+	dsn := "root:123456@tcp(127.0.0.1)/test"
 	var err error
 	DB, err = sql.Open("mysql", dsn)
 	if err != nil {
