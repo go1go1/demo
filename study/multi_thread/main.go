@@ -37,8 +37,8 @@ func consumeSushu(c chan int) {
 	}
 }
 
-// dlv debug ./main.go   开始调试
-// b main.go:16          在main.go文件16行断点
+// dlv debug ./memory_session.go   开始调试
+// b memory_session.go:16          在main.go文件16行断点
 // b produceSushu        在produceSushu函数断点
 // c                     执行到断点
 // n                     单步跳过

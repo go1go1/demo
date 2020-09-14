@@ -7,6 +7,8 @@ require (
 	github.com/didi/gendry v1.5.0
 	github.com/go-sql-driver/mysql v1.5.0
 	github.com/golang/protobuf v1.4.1
+	github.com/gomodule/redigo v1.8.2
+	github.com/google/uuid v1.1.2
 	github.com/ivpusic/go-clicolor v0.0.0-20150828210804-23f0b77f328a // indirect
 	github.com/ivpusic/golog v0.0.0-20170608213328-28640bee649f // indirect
 	github.com/ivpusic/httpcheck v0.0.0-20170215120547-c49b174389ac // indirect
