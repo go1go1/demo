@@ -19,6 +19,8 @@ require (
 	github.com/niemeyer/pretty v0.0.0-20200227124842-a10e7caefd8e // indirect
 	github.com/nsqio/go-nsq v1.0.8
 	github.com/shiena/ansicolor v0.0.0-20151119151921-a422bbe96644 // indirect
+	github.com/sony/sonyflake v1.0.0
+	github.com/speps/go-hashids v2.0.0+incompatible
 	github.com/stretchr/testify v1.6.1 // indirect
 	github.com/vmihailenco/msgpack v4.0.4+incompatible
 	google.golang.org/appengine v1.6.6 // indirect
